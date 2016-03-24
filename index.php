@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Near Earth Objects</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/d3.v3.min.js"></script>
   </head>
   <body>
     <?php
@@ -11,11 +14,9 @@
       //get data from NASA Near Earth Objects
       $url= "https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=";
 
-      $apidata = json_decode(curlGet($url.$apiKey),true);
+      //$apidata = json_decode(curlGet($url.$apiKey),true);
 
       dump($apidata);
-
-
 
       function dump($v,$t=""){
       	echo "<h2>".$t."</h2>";
