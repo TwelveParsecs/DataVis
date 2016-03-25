@@ -22,14 +22,22 @@
 
 
     <script>
-      var width = 1200,
-          height = 600,
+
+      var margin = {top:30, right:30, bottom:50,left:60 }
+
+      var width = 1000 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom,
           barWidth = 25,
           barOffset = 5,
-          startYear = 1950,
-          endYear = 1970;
+          startYear = 1990,
+          endYear = 2012;
 
-      var yScale
+      var yScale,
+          xScale,
+          colours;
+
+
+
       var meteorites;
       var meteoriteCount = {};
 
@@ -64,28 +72,109 @@
                   .domain([0,d3.max(d3.values(meteoriteCount))])
                   .range([0,height]);
 
+        xScale = d3.scale.ordinal()
+                  .domain(d3.range(0,d3.values(meteoriteCount).length))
+                  .rangeBands([0,width-40]);
+
+        colours = d3.scale.linear()
+                  .domain([0,d3.max(d3.values(meteoriteCount))])
+                  .range(["#FFB832","#C61C6F"]);
+
         draw(meteoriteCount);
       }
 
       function draw(meteoriteCount){
-                console.log (meteoriteCount);
-                d3.select("#chart").append("svg")
-                  .attr("width", width)
-                  .attr("height", height)
-                  .style("background", "#333")
-                  .selectAll("rect").data(d3.values(meteoriteCount))
-                  .enter().append("rect")
-                    .style("fill", "#C61C6F")
-                    .attr("width", barWidth)
-                    .attr("height", function(d){
-                      return yScale(d);
-                    })
-                    .attr("x",function(d,i){
-                      return i * (barWidth + barOffset);
-                    })
-                    .attr("y", function(d){
-                      return height - yScale(d);
-                    })
+        //console.log (meteoriteCount);
+        d3.select("#chart").append("svg")
+        .style("background", "#000000")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append('g')
+          .attr("transform", "translate("+margin.left+","+margin.top+")")
+          .selectAll("rect").data(d3.values(meteoriteCount))
+          .enter().append("rect")
+            .style("fill", colours)
+            .attr("width", xScale.rangeBand())
+            .attr("height", function(d){
+              return yScale(d);
+            })
+            .attr("x",function(d,i){
+              return xScale(i);
+            })
+            .attr("y", function(d){
+              return height - yScale(d);
+            });
+
+
+        // Add vertical and horizontal axis
+        var vGuideScale = d3.scale.linear()
+                  .domain([0,d3.max(d3.values(meteoriteCount))])
+                  .range([height,0]);
+
+        var vAxis = d3.svg.axis()
+                  .scale(vGuideScale)
+                  .orient("left")
+                  .ticks(10);
+
+        var vGuide = d3.select("svg").append('g');
+
+        vAxis(vGuide);
+
+        vGuide.attr("transform","translate("+margin.left+","+margin.right+")")
+        vGuide.selectAll("path")
+                .style({fill:"none", stroke: "#fff"});
+        vGuide.selectAll("line")
+                .style({ stroke: "#fff"});
+        vGuide.selectAll("text")
+                .style({ fill: "#fff"});
+
+
+        var hAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom")
+                  .tickFormat(function(d,i) {
+                    var year = (d3.keys(meteoriteCount)[i]);
+                    var length = d3.keys(meteoriteCount).length-1;
+                    var ticks = 6;
+
+                    if (length % 2){
+                        ticks -=1;
+                    }
+
+
+                    // Make sure first and last values are always displayed
+                    if (i != 0 && i != length){
+                      if (i% Math.ceil(length/ticks)==0){
+                        return year;
+                      }
+                    }
+                    else{
+                      return year;
+                    }
+                  });
+
+
+        var hGuide = d3.select("svg").append("g");
+            hAxis(hGuide);
+            hGuide.attr("transform","translate("+margin.left+"," + (height +margin.top) + ")")
+            hGuide.selectAll("path")
+                    .style({fill:"none", stroke: "#fff"});
+            hGuide.selectAll("line")
+                    .style({ stroke: "#fff"});
+            hGuide.selectAll("text")
+                    .style({ fill: "#fff"});
+
+            hGuide.selectAll("text")
+                  .style("text-anchor", "end")
+                  .attr("dx", "-.8em")
+                  .attr("dy", ".15em")
+                  .attr("transform", "rotate(-65)" );
+
+
+
+
+
+
       }
 
 

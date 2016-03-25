@@ -1,4 +1,16 @@
+body{
+  background:#333;
+
+}
+
 h2 {
   font-family: sans-serif;
   font-size: 36px;
+  color:#fff;
+}
+
+.container {
+  margin: 0 auto;
+  width:1000px;
+
 }
