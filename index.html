@@ -22,22 +22,71 @@
 
 
     <script>
-      var width = 600,
+      var width = 1200,
           height = 600,
-          barWidth = 50,
-          barOffset = 5;
+          barWidth = 25,
+          barOffset = 5,
+          startYear = 1950,
+          endYear = 1970;
 
-      //load csv
+      var yScale
+      var meteorites;
+      var meteoriteCount = {};
+
+
+      // Load csv
       d3.csv("Meteorite_Landings.csv", function(data) {
-        console.log(data[0].name);
-      });
+        meteorites = data;
+        count(meteorites);
+      })
 
-      d3.select("#chart").append("svg")
-          .attr("width", width)
-          .attr("height", height)
-          .style("background", "#333")
-          .selectAll("rect")
 
+      function count(meteorites){
+
+        for (var i = 0; i < meteorites.length; i ++){
+          // Extract year and parse integer
+          var year = parseInt(meteorites[i].year.substring(6,10));
+
+          // Check if year is within range
+          if (year >= startYear && year <= endYear){
+            // Check if there is already an entry for that year
+            if (!(year in meteoriteCount)){
+              meteoriteCount[year] = 1;
+            }
+            else{
+              meteoriteCount[year] +=1;
+            }
+          }
+        }
+
+        //set the scale based on the data
+        yScale = d3.scale.linear()
+                  .domain([0,d3.max(d3.values(meteoriteCount))])
+                  .range([0,height]);
+
+        draw(meteoriteCount);
+      }
+
+      function draw(meteoriteCount){
+                console.log (meteoriteCount);
+                d3.select("#chart").append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("background", "#333")
+                  .selectAll("rect").data(d3.values(meteoriteCount))
+                  .enter().append("rect")
+                    .style("fill", "#C61C6F")
+                    .attr("width", barWidth)
+                    .attr("height", function(d){
+                      return yScale(d);
+                    })
+                    .attr("x",function(d,i){
+                      return i * (barWidth + barOffset);
+                    })
+                    .attr("y", function(d){
+                      return height - yScale(d);
+                    })
+      }
 
 
 
