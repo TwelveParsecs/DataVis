@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Near Earth Objects</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="js/jquery-2.2.1.min.js"></script>
+    <script src="js/d3.min.js"></script>
+  </head>
+  <body>
+
+
+    <div class="container">
+      <h2> Meteorite Landings </h2>
+      <section id="chart">
+
+
+      </section>
+    </div>
+
+
+    <script>
+      var width = 600,
+          height = 600,
+          barWidth = 50,
+          barOffset = 5;
+
+      //load csv
+      d3.csv("Meteorite_Landings.csv", function(data) {
+        console.log(data[0].name);
+      });
+
+      d3.select("#chart").append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .style("background", "#333")
+          .selectAll("rect")
+
+
+
+
+    </script>
+  </body>
+</html>
