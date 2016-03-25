@@ -14,3 +14,24 @@ h2 {
   width:1000px;
 
 }
+
+.axis-label{
+  color:#fff;
+
+}
+
+p {
+  color:#fff;
+}
+
+#amount {
+  color:#fff;
+  background:none;
+  font-size:14px;
+}
+
+
+.ui-slider {
+  width:800px;
+  background: none;
+}
