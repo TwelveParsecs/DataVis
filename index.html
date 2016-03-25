@@ -23,13 +23,16 @@
 
 
       </section>
+      <form id="slider-area">
+          <p>
+            <label for="amount">Year:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#fff; ">
 
-      <p>
-        <label for="amount">Year:</label>
-        <input type="text" id="amount" readonly style="border:0; color:#fff; ">
-      </p>
+          </p>
 
-      <div id="slider-range"></div>
+          <div id="slider-range"></div>
+          <input id="slider-submit"  type="button" value="Filter" >
+      </form>
     </div>
 
     <script>
@@ -39,7 +42,7 @@
             range: true,
             min: 1583,
             max: 2013,
-            values: [ 1950, 2000],
+            values: [ 1990, 2013],
             slide: function( event, ui ) {
               $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
             }
@@ -47,6 +50,21 @@
           $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
             " - " + $( "#slider-range" ).slider( "values", 1 ) );
         });
+
+        $( document ).ready(function() {
+         $(".ui-slider-handle").css({ 'background-image': 'none' });
+
+       });
+
+       $("#slider-submit").click(function(){
+         min =$( "#slider-range" ).slider( "option", "min" );
+         max =$( "#slider-range" ).slider( "option", "max" );
+
+        $("#chart").html("");
+        console.log("called");
+        count(min,max);
+        console.log("finished");
+      });
   </script>
 
   </body>

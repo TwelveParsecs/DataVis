@@ -20,18 +20,48 @@ h2 {
 
 }
 
-p {
+p{
   color:#fff;
+}
+
+#slider-area{
+  margin:20px 0 0 90px
 }
 
 #amount {
   color:#fff;
   background:none;
   font-size:14px;
+  padding-bottom:10px;
+  border-color:#fff;
+}
+
+.slider-range{
+  display:inline-block;
+}
+
+#slider-submit{
+  margin:0;
+  padding:5px 10px;
+  display:block;
+  background-color:rgb(230, 230, 230);
+  border:1px;
+  border-color: rgb(211, 211, 211);
+  font-size:14px;
+  position:relative;
+  border-radius: 5px;
+  color:#333;
+  left:800px;
+  top:-22px;
+}
+
+#slider-submit:hover{
+  border:1;
 }
 
 
+
 .ui-slider {
-  width:800px;
+  width:775px;
   background: none;
 }

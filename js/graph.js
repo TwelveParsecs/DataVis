@@ -2,7 +2,7 @@
       var margin = {top:30, right:0, bottom:70,left:80 }
 
       var width = 1000 - margin.left - margin.right,
-          height = 600 - margin.top - margin.bottom,
+          height = 500 - margin.top - margin.bottom,
           barWidth = 25,
           barOffset = 5,
           startYear = 1990,
@@ -21,11 +21,11 @@
       // Load csv
       d3.csv("Meteorite_Landings.csv", function(data) {
         meteorites = data;
-        count(meteorites);
+        count(1990,2013);
       })
 
 
-      function count(meteorites){
+      function count(startYear,endYear){
 
         for (var i = 0; i < meteorites.length; i ++){
           // Extract year and parse integer
@@ -56,10 +56,11 @@
                   .domain([0,d3.max(d3.values(meteoriteCount))])
                   .range(["#FFB832","#C61C6F"]);
 
-        draw(meteoriteCount);
+        draw();
       }
 
-      function draw(meteoriteCount){
+      function draw(){
+
         //console.log (meteoriteCount);
         d3.select("#chart").append("svg")
         //.style("background", "#000000")
