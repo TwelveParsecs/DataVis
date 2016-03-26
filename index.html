@@ -25,7 +25,7 @@
       </section>
       <form id="slider-area">
           <p>
-            <label for="amount">Year:</label>
+            <label for="amount">Year Range:</label>
             <input type="text" id="amount" readonly style="border:0; color:#fff; ">
 
           </p>
@@ -58,7 +58,6 @@
 
        $("#slider-submit").click(function(){
         var values =$( "#slider-range" ).slider( "option", "values" );
-        console.log(values);
         $("#chart").html("");
         count(values[0],values[1]);
       });

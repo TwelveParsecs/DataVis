@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700|Open+Sans);
 
 body{
-  background:#333;
+  background:#1e1e1e;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -54,7 +54,7 @@ p{
   font-size:14px;
   position:relative;
   border-radius: 5px;
-  color:#333;
+  color:#1e1e1e;
   left:800px;
   top:-22px;
 }
