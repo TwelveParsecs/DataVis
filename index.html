@@ -57,13 +57,10 @@
        });
 
        $("#slider-submit").click(function(){
-         min =$( "#slider-range" ).slider( "option", "min" );
-         max =$( "#slider-range" ).slider( "option", "max" );
-
+        var values =$( "#slider-range" ).slider( "option", "values" );
+        console.log(values);
         $("#chart").html("");
-        console.log("called");
-        count(min,max);
-        console.log("finished");
+        count(values[0],values[1]);
       });
   </script>
 

@@ -4,15 +4,13 @@
       var width = 1000 - margin.left - margin.right,
           height = 500 - margin.top - margin.bottom,
           barWidth = 25,
-          barOffset = 5,
-          startYear = 1990,
-          endYear = 2012;
+          barOffset = 5;
+          //startYear = 1990,
+          //endYear = 2012;
 
       var yScale,
           xScale,
           colours;
-
-
 
       var meteorites;
       var meteoriteCount = {};
@@ -26,7 +24,7 @@
 
 
       function count(startYear,endYear){
-
+        meteoriteCount = {};
         for (var i = 0; i < meteorites.length; i ++){
           // Extract year and parse integer
           var year = parseInt(meteorites[i].year.substring(6,10));
@@ -54,13 +52,11 @@
 
         colours = d3.scale.linear()
                   .domain([0,d3.max(d3.values(meteoriteCount))])
-                  .range(["#FFB832","#C61C6F"]);
-
+                  .range(["#3056e6","#f62359"]);
         draw();
       }
 
       function draw(){
-
         //console.log (meteoriteCount);
         d3.select("#chart").append("svg")
         //.style("background", "#000000")
@@ -130,18 +126,17 @@
                   .tickFormat(function(d,i) {
                     var year = (d3.keys(meteoriteCount)[i]);
                     var length = d3.keys(meteoriteCount).length-1;
-                    var ticks = 6;
+                    var interval = 5;
 
-                    if (length % 2){
-                        ticks -=1;
+                    if (length > 70){
+                      interval = 10;
                     }
 
 
                     // Make sure first and last values are always displayed
                     if (i != 0 && i != length){
-                      if (i% Math.ceil(length/ticks)==0){
+                      if (i % interval == 0 && length - i > Math.floor(interval/2))
                         return year;
-                      }
                     }
                     else{
                       return year;
